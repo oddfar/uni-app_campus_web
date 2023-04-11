@@ -1,0 +1,93 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		/** -----index----- */
+		{
+			"path": "pages/index/tab",
+			"style": {
+				"navigationBarTitleText": "campus"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/index/add",
+			"style": {
+				"navigationBarTitleText": "发布"
+			}
+		},
+		/** -----me----- */
+		{
+			"path": "pages/me/me",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		/** -----login----- */
+		{
+			//账号密码登录
+			"path": "pages/login/accountLogin",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+
+		},
+		{
+			//小程序绑定账号
+			"path": "pages/login/bind",
+			"style": {
+				"navigationBarTitleText": "用户绑定"
+			}
+		},
+		{
+			//小程序注册账号
+			"path": "pages/login/bind-register",
+			"style": {
+				"navigationBarTitleText": "用户注册"
+			}
+		},
+		/** -----auth----- */
+		{
+			//扫码小程序登录
+			"path": "pages/auth/wxamp",
+			"style": {
+				"navigationBarTitleText": "用户登录"
+			}
+		},
+		{
+			//扫码小程序登录成功
+			"path": "pages/auth/wxampSuccess",
+			"style": {
+				"navigationBarTitleText": "登录成功"
+			}
+		},
+		{
+			//扫码小程序登录失败
+			"path": "pages/auth/wxampError",
+			"style": {
+				"navigationBarTitleText": "登录失败"
+			}
+		},
+		/** -----c----- */
+		{
+			"path": "pages/c/index",
+			"style": {
+				"navigationBarTitleText": "墙"
+			}
+		}
+
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+	}
+}
