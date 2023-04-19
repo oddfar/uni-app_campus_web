@@ -15,16 +15,20 @@
 					<view class="content-t">
 						<scroll-list ref="contentObj" :option="option" @load="getContent" @refresh="refresh">
 							<view class="content-box" v-for="(item, key) in contentObj" :key="key">
-								<Content :contentObj="item" :loveContentIds="loveContentIds"></Content>
+								<Content :contentObj="item" :loveContentIds="loveContentIds" @openPopup="openPopup">
+								</Content>
 							</view>
 						</scroll-list>
 					</view>
 				</view>
-				<!-- 侧边栏内容 -->
-				<!-- <CampusSide class="hidden-xs-only"></CampusSide> -->
+
 			</view>
 		</view>
-	</view>
+
+		<!-- 拓展点击弹出层 -->
+		<view>
+			<ArrowDown :contentObj="popupData.contentObj" :show="popupData.show" :time="popupData.time"></ArrowDown>
+		</view>
 	</view>
 
 </template>
@@ -43,12 +47,12 @@
 	} from "@/utils/login.js"
 	//引用组件
 	import Content from "@/components/content/index";
-	// import CampusMenu from "@/components/Menu";
+	import ArrowDown from "@/components/content/ArrowDown";
 
 	export default {
-		// components: { Content, CampusMenu },
 		components: {
-			Content
+			Content,
+			ArrowDown
 		},
 		data() {
 			return {
@@ -73,6 +77,8 @@
 				//是否加载
 				loading: true,
 				total: 0,
+				//拓展弹出层
+				popupData: {},
 			};
 		},
 
@@ -167,6 +173,10 @@
 					});
 
 			},
+			//打开拓展弹出层
+			openPopup(data) {
+				this.popupData = data;
+			}
 
 		},
 	};

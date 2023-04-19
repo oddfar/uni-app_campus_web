@@ -28,7 +28,7 @@
 						</span>
 					</view>
 				</view>
-				<div class="woo-box-flex" @click="show = true">
+				<div class="woo-box-flex" @click="openArrowDown()">
 					<div class="woo-pop-wrap">
 						<span class="woo-pop-ctrl">
 							<div class="woo-box-flex woo-box-alignCenter woo-box-justifyCenter">
@@ -57,30 +57,7 @@
 
 		<!-- 信息墙底部 -->
 		<ContentBottom :zanBoolean="zanBoolean" :contentObj="contentObj"></ContentBottom>
-		<!-- 弹出框 -->
-		<u-popup :show="show" mode="bottom" @close="close" :round="10">
-			<view style="padding: 20px; margin-bottom: 50px;">
-				<view class="woo-box-flex">
 
-					<view class="popup-icon">
-						<button id="share" open-type="share">
-							<u-icon name="weixin-circle-fill" size="50"></u-icon>
-							<span class="popup-span">分享微信</span>
-						</button>
-					</view>
-
-					<view class="popup-icon" v-if="loginUserId==contentObj.userId"
-						@click="deleteContent(contentObj.contentId)">
-						<u-icon name="trash" size="50"></u-icon>
-						<span class="popup-span">删除</span>
-					</view>
-				</view>
-				<view style="height: 30px;margin-top: 20px;">
-					<button type="default" @click="show = false">取消</button>
-				</view>
-			</view>
-
-		</u-popup>
 
 	</view>
 
@@ -110,7 +87,6 @@
 			return {
 				//是否点赞
 				zanBoolean: false,
-				show: false,
 				loginUserId: 0
 			};
 		},
@@ -134,6 +110,15 @@
 		mounted() {},
 		//方法集合
 		methods: {
+			//打开弹出层
+			openArrowDown() {
+				const data = {
+					contentObj: this.contentObj,
+					show: true,
+					time: new Date().getTime(),
+				}
+				this.$emit("openPopup", data);
+			},
 			//点击信息墙
 			clickContent() {
 				let routes = getCurrentPages();
@@ -153,10 +138,6 @@
 				} else {
 					this.zanBoolean = true;
 				}
-			},
-			close() {
-				this.show = false
-				// console.log('close');
 			},
 			//删除方法
 			deleteContent(contentId) {
@@ -232,16 +213,5 @@
 
 	.content-box-avatar {
 		margin-right: 10px;
-	}
-
-	.popup-span {
-		color: #939393;
-		font-size: 12px;
-	}
-
-	.popup-icon {
-		text-align: center;
-		margin-right: 10px;
-
 	}
 </style>
