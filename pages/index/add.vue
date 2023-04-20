@@ -15,7 +15,6 @@
 
 			</scroll-view>
 
-
 			<view style="margin-top: 20px;">
 
 				<u--textarea autoHeight placeholder="写下你想说的" v-model="contentParam.content" count maxlength="240"
@@ -24,11 +23,22 @@
 
 
 			</view>
+			<view style="margin-top: 20px;">
+				<u-checkbox-group @change="checkboxChange">
+					<u-checkbox v-model="contentParam.isAnonymous" label="匿名发送"></u-checkbox>
+				</u-checkbox-group>
+			</view>
 		</view>
 
-		<view style="margin-top: 20px;">
-			<u-upload :fileList="fileList" @afterRead="afterRead" @delete="deletePic" multiple 
-			:maxCount="upload.limit" :maxSize="5*1024*1024"	:previewFullImage="true">
+		<view style="margin-top: 20px;" v-if="type==1||type==2">
+			<u-upload v-if="type==1" :fileList="fileList" @delete="deletePic" multiple :maxCount="upload.limit"
+				:maxSize="5*1024*1024" :previewFullImage="true" @beforeRead="beforeRead" @afterRead="afterRead"
+				@oversize="oversize">
+			</u-upload>
+
+			<u-upload v-if="type==2" :fileList="fileList" @delete="deletePic" multiple :maxCount="1"
+				:maxSize="20*1024*1024" :previewFullImage="true" :maxDuration="60" accept="video"
+				@beforeRead="beforeRead" @afterRead="afterRead" @oversize="oversize">
 			</u-upload>
 		</view>
 
@@ -76,6 +86,9 @@
 					content: "",
 					fileList: [],
 				},
+				//类型
+				type: null,
+				url: '',
 				upload: {
 					limit: 3,
 					headers: {},
@@ -88,6 +101,15 @@
 		},
 		onReady() {
 			this.getTreeselect();
+		},
+		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
+			this.type = option.type
+			if (this.type == 1) {
+				this.url = this.MyConfig.baseURL + '/campus/imageUpload'
+			} else {
+				this.url = this.MyConfig.baseURL + '/campus/videoUpload'
+			}
+
 
 		},
 		methods: {
@@ -95,6 +117,23 @@
 			deletePic(event) {
 				this['fileList'].splice(event.index, 1);
 			},
+			//读取前
+			beforeRead(event) {
+				console.log(event)
+			},
+			//读取后
+			afterRead(event) {
+				console.log(event)
+			},
+			//超出大小
+			oversize(event) {
+
+				uni.showToast({
+					icon: 'none',
+					title: '文件超出最大允许大小'
+				})
+			},
+
 			// 新增图片
 			async afterRead(event) {
 				if (!isLogin()) {
@@ -147,10 +186,11 @@
 				}
 
 			},
+			//上传文件
 			uploadFilePromise(item) {
 				return new Promise((resolve, reject) => {
 					let a = uni.uploadFile({
-						url: this.MyConfig.baseURL + '/campus/imageUpload', // 仅为示例，非真实的接口地址
+						url: this.url,
 						filePath: item.url,
 						name: 'file',
 						header: this.upload.headers,
@@ -179,6 +219,7 @@
 					this.show = true;
 				});
 			},
+			//发布
 			publishContent() {
 				if (!isLogin()) {
 					uni.navigateTo({
@@ -188,6 +229,7 @@
 				}
 				this.contentParam.fileList = [];
 				for (let file of this.fileList) {
+					this.contentParam.type = 0;
 					if (file.type.startsWith("image")) {
 						this.contentParam.type = 1;
 					}
@@ -216,7 +258,7 @@
 						title: '发表成功，请等待审核'
 					})
 
-					uni.navigateTo({
+					uni.reLaunch({
 						url: '/pages/me/me'
 					})
 				});
@@ -224,6 +266,14 @@
 			//点击分类
 			clickCategory(categoryId) {
 				this.contentParam.categoryId = categoryId
+			},
+			//是否匿名
+			checkboxChange(n) {
+				if (n.length > 0) {
+					this.contentParam.isAnonymous = 1
+				} else {
+					this.contentParam.isAnonymous = 0
+				}
 			}
 		}
 

@@ -16,10 +16,9 @@
 		</view>
 
 		<view v-if="contentType == 2">
-			<video style="border-radius: 10px" align="center" :loop="true" :autoplay="false" width="100%"
-				:height="videoHeight" aspectRatio="16:9" :fluid="true" preload="none" :muted="false" :controls="true">
-				<source :src="fileList[0]" type="video/mp4" />
-				您的浏览器不支持视频标签！
+			<!-- style="border-radius: 10px" -->
+			<video id="myVideo" :src="fileList[0]" :enable-play-gesture="true">
+
 			</video>
 		</view>
 	</view>
@@ -43,7 +42,7 @@
 		},
 		watch: {
 			fileUrls: {
-				immediate: true, // 很重要！！！
+				immediate: true,
 				handler(newValue, oldValue) {
 					this.setFileUrls();
 				}

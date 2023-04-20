@@ -72,7 +72,8 @@
 		wxampLogin
 	} from "@/utils/login.js"
 	import {
-		isLogin,setUserId
+		isLogin,
+		setUserId
 	} from "@/utils/auth";
 
 	//引用组件
@@ -235,7 +236,6 @@
 						for (var i of data.rows) {
 							this.commentList.push(i)
 						};
-						console.log(this.commentList)
 						this.total = parseInt(data.total);
 
 						this.$refs.commentObj.loadSuccess({
