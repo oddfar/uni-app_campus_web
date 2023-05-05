@@ -5,9 +5,9 @@ module.exports = {
 	// 应用信息
 	appInfo: {
 		// 应用名称
-		name: "campus-example",
+		name: "campus-nuxt",
 		// 应用版本
-		version: "1.1.1",
+		version: "1.0.1",
 		// 应用logo
 		logo: "/static/logo.png",
 	}

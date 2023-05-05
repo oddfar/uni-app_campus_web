@@ -27,7 +27,7 @@
 
 - 项目文档：<https://oddfar.github.io/campus-doc/campus-example>
 
-### 项目代码
+## 项目代码
 
 |                | GitHub                                          |
 | -------------- | ----------------------------------------------- |
@@ -36,3 +36,7 @@
 | uni-app 移动端 | <https://github.com/oddfar/uni-app_campus_web>  |
 
 vue后台代码在后端项目中
+
+## 演示图
+
+[请看此处](https://oddfar.github.io/campus-doc/campus-example/#%E6%BC%94%E7%A4%BA%E5%9B%BE)

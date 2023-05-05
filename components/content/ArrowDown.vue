@@ -32,7 +32,8 @@
 		isLogin,
 		getUserId
 	} from "@/utils/auth";
-
+	import operateApi from "@/api/operate";
+	
 	export default {
 		name: "ArrowDown",
 		props: ["contentObj", "show", "time"],
@@ -61,7 +62,31 @@
 		methods: {
 			close() {
 				this.arrShow = false
-			}
+			},
+			deleteContent(contentId) {
+				uni.showModal({
+					title: '提示',
+					content: '你确定要删除吗',
+					success: function(res) {
+						if (res.confirm) {
+							operateApi.deleteContent(contentId).then((response) => {
+								uni.showToast({
+									icon: 'none',
+									title: '删除成功，请手动刷新'
+								})
+								this.close();
+			
+							});
+						} else if (res.cancel) {
+							uni.showToast({
+								icon: 'none',
+								title: '取消删除！'
+							})
+						}
+					}
+				});
+			
+			},
 
 		}
 

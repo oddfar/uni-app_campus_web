@@ -36,7 +36,7 @@
 					<view v-if="curNow==0">
 						<scroll-list ref="contentObj" :option="option" @load="getContent" @refresh="refreshContent">
 							<view class="content-box" v-for="(item, key) in contentObj" :key="key">
-								<Content :contentObj="item" :loveContentIds="loveContentIds"></Content>
+								<Content :contentObj="item" :loveContentIds="loveContentIds" @openPopup="openPopup"></Content>
 							</view>
 						</scroll-list>
 					</view>
@@ -62,6 +62,10 @@
 				</view>
 			</view>
 		</view>
+		<!-- 拓展点击弹出层 -->
+		<view>
+			<ArrowDown :contentObj="popupData.contentObj" :show="popupData.show" :time="popupData.time"></ArrowDown>
+		</view>
 	</view>
 </template>
 
@@ -78,12 +82,14 @@
 
 	//引用组件
 	import Content from "@/components/content/index";
-	import ownComment from "@/components/comment/ownComment"
+	import ownComment from "@/components/comment/ownComment";
+	import ArrowDown from "@/components/content/ArrowDown";
 
 	export default {
 		components: {
 			Content,
-			ownComment
+			ownComment,
+			ArrowDown
 		},
 		data() {
 			return {
@@ -112,6 +118,8 @@
 				},
 				total: 0,
 				loveContentIds: [],
+				//拓展弹出层
+				popupData: {},
 			}
 		},
 		created() {
@@ -285,8 +293,10 @@
 						console.log("错误信息：", error);
 					})
 
-
-
+			},
+			//打开拓展弹出层
+			openPopup(data) {
+				this.popupData = data;
 			}
 		}
 

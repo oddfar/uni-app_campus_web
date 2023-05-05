@@ -106,7 +106,8 @@
 			this.type = option.type
 			if (this.type == 1) {
 				this.url = this.MyConfig.baseURL + '/campus/imageUpload'
-			} else {
+			}
+			if (this.type == 2) {
 				this.url = this.MyConfig.baseURL + '/campus/videoUpload'
 			}
 

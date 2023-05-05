@@ -21,17 +21,24 @@
 							<view>{{ contentObj.params.categoryName }}</view>
 						</view>
 						<view class="content-category-tag" v-if="contentObj.status==0">
-							<view style="color: red;">审核中</view>
+							<view style="color: blue;">审核中</view>
+						</view>
+						<view class="content-category-tag" v-if="contentObj.status==2">
+							<view style="color: red;">已下架</view>
+						</view>
+						<view class="content-category-tag" v-if="contentObj.status==3">
+							<view style="color: red;">审核不通过</view>
 						</view>
 						<span class="content-box-time">
 							{{ parseTime(contentObj.createTime, "{y}-{m}-{d} {h}:{i}") }}
 						</span>
 					</view>
 				</view>
-				<div class="woo-box-flex" @click="openArrowDown()">
+				<div class="woo-box-flex" @click="openArrowDown()" style="width: 30px;">
 					<div class="woo-pop-wrap">
 						<span class="woo-pop-ctrl">
-							<div class="woo-box-flex woo-box-alignCenter woo-box-justifyCenter">
+							<div class="woo-box-flex woo-box-alignCenter woo-box-justifyCenter"
+								style="padding-left: 10px;">
 								<u-icon name="arrow-down"></u-icon>
 							</div>
 						</span>
@@ -139,31 +146,7 @@
 					this.zanBoolean = true;
 				}
 			},
-			//删除方法
-			deleteContent(contentId) {
-				uni.showModal({
-					title: '提示',
-					content: '你确定要删除吗',
-					success: function(res) {
-						if (res.confirm) {
-							operateApi.deleteContent(contentId).then((response) => {
-								uni.showToast({
-									icon: 'none',
-									title: '删除成功，请手动刷新'
-								})
 
-							});
-						} else if (res.cancel) {
-							uni.showToast({
-								icon: 'none',
-								title: '取消删除！'
-							})
-						}
-					}
-				});
-
-
-			},
 		},
 	};
 </script>

@@ -94,7 +94,14 @@
 		//生命周期 - 挂载完成（可以访问DOM元素）
 		mounted() {
 			this.isZanBoo = this.zanBoolean;
-			this.isZan();
+		},
+		watch: {
+			isZanBoo: {
+				immediate: true,
+				handler(newValue, oldValue) {
+					this.isZan();
+				}
+			},
 
 		},
 		onShareAppMessage(res) {
@@ -157,7 +164,19 @@
 						if (response.data == 0) {
 							//取消点赞
 						}
-					});
+					}).catch(({
+						...error
+					}) => {
+						if (this.isZanBoo == true) {
+							//取消点赞
+							this.isZanBoo = false;
+							this.loveCount--;
+						} else {
+							//设置点赞
+							this.isZanBoo = true;
+							this.loveCount++;
+						}
+					})
 				}
 			},
 			share() {
