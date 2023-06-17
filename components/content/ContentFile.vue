@@ -44,7 +44,9 @@
 			fileUrls: {
 				immediate: true,
 				handler(newValue, oldValue) {
-					this.setFileUrls();
+					if (newValue !== null && newValue != undefined && newValue.length > 0) {
+						this.setFileUrls();
+					}
 				}
 			}
 		},
